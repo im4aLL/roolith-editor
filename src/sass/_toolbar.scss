@@ -13,8 +13,12 @@
 .roolith__editor__toolbar__list__item {
     float: left;
     width: rem(20);
-    padding: rem(5) rem(7);
+    padding: 0 rem(7);
     text-align: center;
+    height: rem(34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     @include clearfix();
     @include transition('background');
 
@@ -34,10 +38,15 @@
     color: darken($roolith-editor-primary-color, 20%);
     padding-left: rem(2);
     padding-right: rem(2);
+    font-size: rem(15);
 }
 
 .roolith__editor__toolbar__list__item--fit {
     width: auto;
+
+    &.is--show {
+        background: $roolith-editor-primary-color;
+    }
 }
 
 .roolith__editor__toolbar__list__item__dropdown {
@@ -45,18 +54,73 @@
 }
 
 .roolith__editor__toolbar__list__item__dropdown__header {
-    padding: 0 rem(20) rem(3) 0;
+    padding: 0 rem(30) rem(3) 0;
+    position: relative;
+    font-size: rem(14);
+
+    &:after {
+        content: "";
+        display: inline-block;
+        width: rem(22);
+        height: rem(22);
+        mask: inline-svg('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.843 9.593L11.5 15.25l5.657-5.657l-.707-.707l-4.95 4.95l-4.95-4.95l-.707.707z"/></svg>');
+        background: darken($roolith-editor-primary-color, 70%);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
 }
 
 .roolith__editor__toolbar__list__item__dropdown__list {
     position: absolute;
-    top: 0;
+    top: rem(30);
     left: 0;
     width: rem(200);
     list-style: none;
+    text-align: left;
+    background: $roolith-editor-border-color;
+    border-radius: 0 0 $roolith-editor-border-radius $roolith-editor-border-radius;
+    padding: rem(5) 0;
+    transform: translateX(rem(-7));
     display: none;
+
+    .is--show & {
+        display: block;
+    }
 }
 
 .roolith__editor__toolbar__list__item__dropdown__list__item {
+    padding: rem(5) rem(15);
+    color: rgba(0, 0, 0, 0.7);
+}
 
+.is--h1 {
+    font-size: rem(32);
+    font-weight: bold;
+}
+
+.is--h2 {
+    font-size: rem(28);
+    font-weight: bold;
+}
+
+.is--h3 {
+    font-size: rem(24);
+    font-weight: bold;
+}
+
+.is--h4 {
+    font-size: rem(22);
+    font-weight: bold;
+}
+
+.is--h5 {
+    font-size: rem(18);
+    font-weight: bold;
+}
+
+.is--h6 {
+    font-size: rem(16);
+    font-weight: bold;
 }
