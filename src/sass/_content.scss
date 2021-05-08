@@ -1,0 +1,10 @@
+.roolith__editor__content {
+    border: rem(1) solid $roolith-editor-border-color;
+    border-top: none;
+    border-radius: 0 0 $roolith-editor-border-radius $roolith-editor-border-radius;
+    padding: rem(10);
+    outline: none;
+    font-family: $roolith-editor-font-family;
+    font-size: $roolith-editor-font-size;
+    line-height: $roolith-editor-line-height;
+}

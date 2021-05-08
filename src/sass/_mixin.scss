@@ -1,0 +1,31 @@
+  
+$global-base-font-size: 16px !default;
+
+@function rem($pixels, $context: $global-base-font-size) {
+    @if (unitless($pixels)) {
+        $pixels: $pixels * 1px;
+    }
+
+    @if (unitless($context)) {
+        $context: $context * 1px;
+    }
+
+    @return $pixels / $context * 1rem;
+}
+
+@mixin clearfix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin transition($property, $transition-duration: 150ms, $transition-method: ease-in-out){
+    transition-property: #{$property};
+    transition-duration: $transition-duration;
+    transition-timing-function: $transition-method;
+}

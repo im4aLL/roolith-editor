@@ -1,0 +1,62 @@
+.roolith__editor__toolbar {
+    border: rem(1) solid $roolith-editor-border-color;
+    border-radius: $roolith-editor-border-radius $roolith-editor-border-radius 0 0;
+    font-family: $roolith-editor-font-family;
+    font-size: $roolith-editor-font-size;
+}
+
+.roolith__editor__toolbar__list {
+    list-style: none;
+    @include clearfix();
+}
+
+.roolith__editor__toolbar__list__item {
+    float: left;
+    width: rem(20);
+    padding: rem(5) rem(7);
+    text-align: center;
+    @include clearfix();
+    @include transition('background');
+
+    svg {
+        width: 100%;
+        float: left;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background: $roolith-editor-primary-color;
+    }
+}
+
+.roolith__editor__toolbar__list__item--separator {
+    pointer-events: none;
+    color: darken($roolith-editor-primary-color, 20%);
+    padding-left: rem(2);
+    padding-right: rem(2);
+}
+
+.roolith__editor__toolbar__list__item--fit {
+    width: auto;
+}
+
+.roolith__editor__toolbar__list__item__dropdown {
+    position: relative;
+}
+
+.roolith__editor__toolbar__list__item__dropdown__header {
+    padding: 0 rem(20) rem(3) 0;
+}
+
+.roolith__editor__toolbar__list__item__dropdown__list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: rem(200);
+    list-style: none;
+    display: none;
+}
+
+.roolith__editor__toolbar__list__item__dropdown__list__item {
+
+}
