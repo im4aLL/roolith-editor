@@ -14,6 +14,17 @@
 <body>
     <div class="demo">
         <textarea id="editor"></textarea>
+
+        <div class="roolith__editor__modal">
+            <div class="roolith__editor__modal__content">
+                <div class="roolith__editor__modal__content__header">Paste code here <button class="roolith__editor__modal__close"></button></div>
+                <div class="roolith__editor__modal__content__body">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, necessitatibus. Aut unde, quisquam debitis optio molestias beatae tempore, repudiandae excepturi ea quam, eveniet officiis. Quo possimus voluptatem assumenda ab repellendus.</p>
+
+                    <button onclick="insertContent()">Insert</button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="../dist/js/app.js"></script>
@@ -29,6 +40,10 @@
         });
 
         console.log(editor);
+
+        function insertContent() {
+            editor.insertContent('some content');
+        }
     </script>
 </body>
 </html>

@@ -20,6 +20,10 @@ export class RoolithEditor {
         this.event = new Event(this.renderer, this.settings);
         this.event.register();
     }
+
+    insertContent(content = '') {
+
+    }
 }
 
 window.RoolithEditor = RoolithEditor;
