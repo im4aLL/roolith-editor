@@ -12,15 +12,23 @@
 
 .roolith__editor__toolbar__list__item {
     float: left;
-    width: rem(20);
-    padding: 0 rem(7);
-    text-align: center;
+    width: rem(34);
     height: rem(34);
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     @include clearfix();
     @include transition('background');
+
+    button {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        padding: 0 rem(7);
+        cursor: pointer;
+    }
 
     svg {
         width: 100%;

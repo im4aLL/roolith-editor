@@ -15,7 +15,7 @@
     <div class="demo">
 
         <!-- editor -->
-        <div class="roolith__editor">
+        <!-- <div class="roolith__editor">
             <div class="roolith__editor__toolbar">
                 <ul class="roolith__editor__toolbar__list">
                     <li class="roolith__editor__toolbar__list__item" data-command="bold">
@@ -71,7 +71,6 @@
                     <li class="roolith__editor__toolbar__list__item" data-command="formatBlock" data-tag="pre">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-code"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                     </li>
-                    <!-- is--show -->
                     <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit">
                         <div class="roolith__editor__toolbar__list__item__dropdown">
                             <div class="roolith__editor__toolbar__list__item__dropdown__header">Heading</div>
@@ -88,11 +87,19 @@
                 </ul>
             </div>
             <div class="roolith__editor__content" contenteditable="true"></div>
-        </div>
+        </div> -->
         <!-- editor -->
+        <textarea id="editor"></textarea>
 
     </div>
     
     <script src="../dist/js/app.js"></script>
+    <script>
+        const editor = new RoolithEditor(document.getElementById('editor'), {
+            toolbar: ['bold', 'italic', 'insertUnorderedList', 'insertOrderedList', 'removeFormat']
+        });
+
+        console.log(editor);
+    </script>
 </body>
 </html>

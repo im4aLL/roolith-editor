@@ -7,4 +7,8 @@
     font-family: $roolith-editor-font-family;
     font-size: $roolith-editor-font-size;
     line-height: $roolith-editor-line-height;
+
+    ul, ol {
+        margin-left: rem(40);
+    }
 }
