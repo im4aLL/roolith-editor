@@ -50,6 +50,24 @@ export class Renderer {
 
             if (icon) {
                 toolbarHtml += `<li class="roolith__editor__toolbar__list__item" data-command="${button}"><button>${icon}</button></li>`;
+            } else if (button === '-') {
+                toolbarHtml += `<li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--separator">-</li>`;
+            } else if (button === 'headings') {
+                toolbarHtml += `
+                    <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit is--show">
+                        <div class="roolith__editor__toolbar__list__item__dropdown">
+                            <div class="roolith__editor__toolbar__list__item__dropdown__header">Heading</div>
+                            <ul class="roolith__editor__toolbar__list__item__dropdown__list">
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h1" data-command="formatBlock:h1"><button>Heading 1</button></li>
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h2" data-command="formatBlock:h2"><button>Heading 2</button></li>
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h3" data-command="formatBlock:h3"><button>Heading 3</button></li>
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h4" data-command="formatBlock:h4"><button>Heading 4</button></li>
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h5" data-command="formatBlock:h5"><button>Heading 5</button></li>
+                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h6" data-command="formatBlock:h6"><button>Heading 6</button></li>
+                            </ul>
+                        </div>
+                    </li>
+                `;
             }
         });
 

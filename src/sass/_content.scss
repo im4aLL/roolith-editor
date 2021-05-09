@@ -11,4 +11,10 @@
     ul, ol {
         margin-left: rem(40);
     }
+
+    blockquote {
+        color: rgba(0, 0, 0, 0.5);
+        padding-left: rem(10);
+        border-left: rem(5) solid rgba(0, 0, 0, 0.2);
+    }
 }

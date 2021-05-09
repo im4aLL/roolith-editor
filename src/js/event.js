@@ -1,3 +1,5 @@
+import { Helper } from "./helper";
+
 export class Event {
     constructor(renderer) {
         this.renderer = renderer;
@@ -27,14 +29,46 @@ export class Event {
     }
 
     toolbarButtonClickEvent(button, event) {
-        const command = button.getAttribute('data-command');
+        console.log(button);
+
+        let commandName = button.getAttribute('data-command');
+        let showUi = false;
+        let value = null;
+
+        if (commandName.indexOf(':') > -1) {
+            const arr = commandName.split(':');
+            commandName = arr[0];
+            value = arr[1];
+        }
+
         this.editorBody.focus();
 
+        if (commandName === 'createLink') {
+            this.executeLinkCommand(event);
+        } else {
+            this.executeCommand(event, commandName, showUi, value);
+        }
+    }
+
+    executeCommand(event, commandName, showUi = false, value = null) {
         try {
             event.preventDefault();
-            document.execCommand(command);
+            document.execCommand(commandName, showUi, value);
+
+            if (commandName === 'removeFormat') {
+                document.execCommand('formatBlock', false, 'div');
+            }
         } catch (e) {
             console.log(e);
+        }
+    }
+
+    executeLinkCommand(event) {
+        const linkUrl = prompt('Enter a URL:', 'http://');
+        const selectionText = Helper.getSelection();
+
+        if (selectionText) {
+            this.executeCommand(event, 'insertHTML', false, '<a href="' + linkUrl + '" target="_blank">' + selectionText + '</a>');
         }
     }
 }
