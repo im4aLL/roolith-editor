@@ -1,4 +1,5 @@
 import { Helper } from "./helper";
+import { Modal } from "./modal";
 
 export class Event {
     constructor(renderer, settings) {
@@ -7,6 +8,7 @@ export class Event {
 
         this.editor = document.getElementById(this.renderer.editorId);
         this.editorBody = this.editor.querySelector('.roolith__editor__content');
+        this.modal = new Modal();
     }
 
     register() {
@@ -53,23 +55,10 @@ export class Event {
 
         if (commandName === 'createLink') {
             this.executeLinkCommand(event);
+        } else if (commandName === 'image') {
+            this.modal.open();
         } else {
             this.executeCommand(event, commandName, showUi, value);
-        }
-    }
-
-    executeCommand(event, commandName, showUi = false, value = null) {
-        this.editorBody.focus();
-        
-        try {
-            event.preventDefault();
-            document.execCommand(commandName, showUi, value);
-
-            if (commandName === 'removeFormat') {
-                document.execCommand('formatBlock', false, 'div');
-            }
-        } catch (e) {
-            console.log(e);
         }
     }
 
@@ -85,6 +74,21 @@ export class Event {
             }
 
             this.executeCommand(event, 'insertHTML', false, value);
+        }
+    }
+
+    executeCommand(event, commandName, showUi = false, value = null) {
+        this.editorBody.focus();
+        
+        try {
+            event.preventDefault();
+            document.execCommand(commandName, showUi, value);
+
+            if (commandName === 'removeFormat') {
+                document.execCommand('formatBlock', false, 'div');
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 }
