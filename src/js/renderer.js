@@ -46,7 +46,7 @@ export class Renderer {
         let toolbarHtml = '';
 
         this.buttons.forEach(button => {
-            const icon = ToolbarIcons[button] || null;
+            const icon = this.getToolbarIcon(button) || null;
 
             if (icon) {
                 toolbarHtml += `<li class="roolith__editor__toolbar__list__item" data-command="${button}"><button>${icon}</button></li>`;
@@ -80,5 +80,18 @@ export class Renderer {
 
     attachInstanceClass() {
         this.selector.classList.add(`roolith-editor-selector-${this.instanceId}`);
+    }
+
+    getToolbarIcon(button) {
+        if (ToolbarIcons[button]) {
+            return ToolbarIcons[button];
+        } else if (this.settings.registerCustomToolbar) {
+            const customToolbar = this.settings.registerCustomToolbar.find(customToolbar => customToolbar.name === button);
+            if (customToolbar) {
+                return customToolbar.icon;
+            }
+        }
+
+        return null;
     }
 }

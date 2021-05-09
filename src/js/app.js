@@ -24,6 +24,20 @@ export class RoolithEditor {
     insertContent(content = '') {
 
     }
+
+    openModal(html) {
+
+    }
+
+    closeModal() {
+
+    }
+
+    change(callback = null) {
+        if (callback) {
+            callback.call(this);
+        }
+    }
 }
 
 window.RoolithEditor = RoolithEditor;

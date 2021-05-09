@@ -33,6 +33,15 @@ export class Event {
         console.log(button);
 
         let commandName = button.getAttribute('data-command');
+
+        if (this.settings.registerCustomToolbar) {
+            const customToolbar = this.settings.registerCustomToolbar.find(customToolbar => customToolbar.name === commandName);
+            if (customToolbar) {
+                customToolbar.clickHandler.call(this, event, button);
+                return;
+            }
+        }
+
         let showUi = false;
         let value = null;
 
