@@ -17,7 +17,7 @@ export class RoolithEditor {
         this.renderer = new Renderer(this.selector, this.instanceId, this.settings);
         this.renderer.generate();
 
-        this.event = new Event(this.renderer);
+        this.event = new Event(this.renderer, this.settings);
         this.event.register();
     }
 }

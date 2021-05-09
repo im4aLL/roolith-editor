@@ -1,8 +1,9 @@
 import { Helper } from "./helper";
 
 export class Event {
-    constructor(renderer) {
+    constructor(renderer, settings) {
         this.renderer = renderer;
+        this.settings = settings;
 
         this.editor = document.getElementById(this.renderer.editorId);
         this.editorBody = this.editor.querySelector('.roolith__editor__content');
@@ -41,8 +42,6 @@ export class Event {
             value = arr[1];
         }
 
-        this.editorBody.focus();
-
         if (commandName === 'createLink') {
             this.executeLinkCommand(event);
         } else {
@@ -51,6 +50,8 @@ export class Event {
     }
 
     executeCommand(event, commandName, showUi = false, value = null) {
+        this.editorBody.focus();
+        
         try {
             event.preventDefault();
             document.execCommand(commandName, showUi, value);
@@ -68,7 +69,13 @@ export class Event {
         const selectionText = Helper.getSelection();
 
         if (selectionText) {
-            this.executeCommand(event, 'insertHTML', false, '<a href="' + linkUrl + '" target="_blank">' + selectionText + '</a>');
+            let value = `<a href="${linkUrl}">${selectionText}</a>`;
+
+            if (this.settings.linkType) {
+                value = `<a href="${linkUrl}" target="${this.settings.linkType}">${selectionText}</a>`;
+            }
+
+            this.executeCommand(event, 'insertHTML', false, value);
         }
     }
 }
