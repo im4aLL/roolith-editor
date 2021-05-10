@@ -55,7 +55,7 @@ export class Event {
         if (commandName === 'createLink') {
             this.executeLinkCommand(event);
         } else if (commandName === 'image') {
-            this.modal.open();
+            this.executeImageCommand(event);
         } else {
             this.executeCommand(event, commandName, showUi, value);
         }
@@ -74,6 +74,21 @@ export class Event {
 
             this.executeCommand(event, 'insertHTML', false, value);
         }
+    }
+
+    executeImageCommand(event) {
+        this.modal.open({
+            title: 'Insert image',
+            content: ''
+        });
+        
+        // const linkUrl = prompt('Enter image URL:', 'http://');
+
+        // if (selectionText) {
+        //     const value = `<img src="">`;
+
+        //     this.executeCommand(event, 'insertHTML', false, value);
+        // }
     }
 
     executeCommand(event, commandName, showUi = false, value = null) {
