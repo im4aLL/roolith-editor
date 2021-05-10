@@ -43,39 +43,7 @@ export class Helper {
     }
 
     static insertAtCaret(html) {
-        // document.execCommand('insertHTML', false, html);
-        const selection = Helper.getSelection();
-        let range;
-
-        if (!selection) {
-            return false;
-        }
-
-        if (selection.getRangeAt && selection.rangeCount) {
-            range = selection.getRangeAt(0);
-            range.deleteContents();
-
-            const el = document.createElement('div');
-            el.innerHTML = html;
-
-            const frag = document.createDocumentFragment();
-            let node;
-            let lastNode;
-
-            while ((node = el.firstChild)) {
-                lastNode = frag.appendChild(node);
-            }
-
-            range.insertNode(frag);
-
-            if (lastNode) {
-                range = range.cloneRange();
-                range.setStartAfter(lastNode);
-                range.collapse(true);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            }
-        }
+        document.execCommand('insertHTML', false, html);
     }
 
     static putCaretAtEnd(contentEditableElement) {
@@ -90,4 +58,18 @@ export class Helper {
         selection.addRange(range);
     }
     
+    static parseTemplate(template, data) {
+        return template.replace(/\{([\w\.]*)\}/g, (str, key) => {
+            const keys = key.split('.');
+            let v = data[keys.shift()];
+
+            if (keys.length > 0) {
+                keys.forEach(k => {
+                    v = v[k];
+                });
+            }
+
+            return (typeof v !== 'undefined' && v !== null) ? v : '';
+        });
+    }
 }

@@ -1,14 +1,13 @@
 import { Helper } from "./helper";
-import { Modal } from "./modal";
 
 export class Event {
-    constructor(renderer, settings) {
+    constructor(renderer, modal, settings) {
         this.renderer = renderer;
         this.settings = settings;
 
         this.editor = document.getElementById(this.renderer.editorId);
         this.editorBody = this.editor.querySelector('.roolith__editor__content');
-        this.modal = new Modal();
+        this.modal = modal;
     }
 
     register() {

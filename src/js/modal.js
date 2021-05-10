@@ -1,33 +1,37 @@
 import { Helper } from "./helper";
+import { Template } from "./template";
 
 export class Modal {
-    constructor() {
+    constructor(renderer) {
+        this.renderer = renderer;
+
         this.range = null;
+        this.editor = document.getElementById(this.renderer.editorId);
+        this.editorBody = this.editor.querySelector('.roolith__editor__content');
+        this.watchKeyboard();
     }
 
-    open() {
+    open(settings = { title: 'Untitled', content: '' }) {
         this.range = Helper.saveSelection();
+        this.setFocusToEditor(() => {
+            this.range = Helper.saveSelection();
+        });
 
-        document.body.insertAdjacentHTML('afterend', `
-            <div class="roolith__editor__modal">
-                <div class="roolith__editor__modal__content">
-                    <div class="roolith__editor__modal__content__header">Paste code here <button class="roolith__editor__modal__close"></button></div>
-                    <div class="roolith__editor__modal__content__body">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, necessitatibus. Aut unde, quisquam debitis optio molestias beatae tempore, repudiandae excepturi ea quam, eveniet officiis. Quo possimus voluptatem assumenda ab repellendus.</p>
-                    </div>
-                </div>
-            </div>
-        `);
+        document.body.insertAdjacentHTML('afterend', Helper.parseTemplate(Template.modal, { title: settings.title, content: settings.content }));
 
         this.registerCloseEvent();
     }
 
     close() {
-        this.unregisterCloseEvent();
-        document.querySelector('.roolith__editor__modal').remove();
+        const modal = document.querySelector('.roolith__editor__modal');
 
-        if (this.range) {
-            Helper.restoreSelection(this.range);
+        if (modal) {
+            this.unregisterCloseEvent();
+            document.querySelector('.roolith__editor__modal').remove();
+
+            if (this.range) {
+                Helper.restoreSelection(this.range);
+            }
         }
     }
 
@@ -37,5 +41,23 @@ export class Modal {
 
     unregisterCloseEvent() {
         document.querySelector('.roolith__editor__modal__close').removeEventListener('click', this.close.bind(this));
+    }
+
+    setFocusToEditor(callback) {
+        if (!this.range || (this.range && this.range.commonAncestorContainer !== this.editorBody)) {
+            this.editorBody.focus();
+            
+            if (callback) {
+                callback.call(this, this.editorBody);
+            }
+        }
+    }
+
+    watchKeyboard() {
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                this.close();
+            }
+        });
     }
 }

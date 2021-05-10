@@ -1,6 +1,7 @@
 import { Event } from "./event";
 import { Helper } from "./helper";
 import { Renderer } from "./renderer";
+import { Modal } from "./modal";
 
 export class RoolithEditor {
     constructor(selector, settings = {}) {
@@ -9,6 +10,7 @@ export class RoolithEditor {
         this.settings = {...settings};
         this.renderer = null;
         this.event = null;
+        this.modal = null;
 
         this.init();
     }
@@ -16,21 +18,25 @@ export class RoolithEditor {
     init() {
         this.renderer = new Renderer(this.selector, this.instanceId, this.settings);
         this.renderer.generate();
+        this.modal = new Modal(this.renderer);
 
-        this.event = new Event(this.renderer, this.settings);
+        this.event = new Event(this.renderer, this.modal, this.settings);
         this.event.register();
     }
 
     insertContent(content = '') {
+        this.closeModal();
 
+        this.modal.setFocusToEditor();
+        Helper.insertAtCaret(content);
     }
 
-    openModal(html) {
-
+    openModal(title = '', content = '') {
+        this.modal.open({ title, content });
     }
 
     closeModal() {
-
+        this.modal.close();
     }
 
     change(callback = null) {

@@ -1,3 +1,5 @@
+import { Helper } from "./helper";
+import { Template } from "./template";
 import { ToolbarIcons } from "./toolbar";
 
 export class Renderer {
@@ -26,14 +28,7 @@ export class Renderer {
     }
 
     generateSkeleton() {
-        this.selector.insertAdjacentHTML('afterend', `
-            <div class="roolith__editor" id="${this.editorId}">
-                <div class="roolith__editor__toolbar">
-                    <ul class="roolith__editor__toolbar__list"></ul>
-                </div>
-                <div class="roolith__editor__content" contenteditable="true" spellcheck="true"></div>
-            </div>
-        `);
+        this.selector.insertAdjacentHTML('afterend', Helper.parseTemplate(Template.skeleton, { editorId: this.editorId }));
     }
 
     generateToolbar() {
@@ -49,25 +44,11 @@ export class Renderer {
             const icon = this.getToolbarIcon(button) || null;
 
             if (icon) {
-                toolbarHtml += `<li class="roolith__editor__toolbar__list__item" data-command="${button}"><button>${icon}</button></li>`;
+                toolbarHtml += Helper.parseTemplate(Template.button, { button, icon });
             } else if (button === '-') {
-                toolbarHtml += `<li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--separator">-</li>`;
+                toolbarHtml += Template.separator;
             } else if (button === 'headings') {
-                toolbarHtml += `
-                    <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit is--show">
-                        <div class="roolith__editor__toolbar__list__item__dropdown">
-                            <div class="roolith__editor__toolbar__list__item__dropdown__header">Heading</div>
-                            <ul class="roolith__editor__toolbar__list__item__dropdown__list">
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h1" data-command="formatBlock:h1"><button>Heading 1</button></li>
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h2" data-command="formatBlock:h2"><button>Heading 2</button></li>
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h3" data-command="formatBlock:h3"><button>Heading 3</button></li>
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h4" data-command="formatBlock:h4"><button>Heading 4</button></li>
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h5" data-command="formatBlock:h5"><button>Heading 5</button></li>
-                                <li class="roolith__editor__toolbar__list__item__dropdown__list__item is--h6" data-command="formatBlock:h6"><button>Heading 6</button></li>
-                            </ul>
-                        </div>
-                    </li>
-                `;
+                toolbarHtml += Template.headings;
             }
         });
 

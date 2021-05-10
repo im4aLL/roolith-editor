@@ -21,6 +21,7 @@ $roolith-editor-modal-content-spacing: rem(10) rem(15) !default;
     background: $roolith-editor-modal-content-bg;
     border: rem(1) solid $roolith-editor-border-color;
     border-radius: $roolith-editor-border-radius;
+    min-width: rem(300);
     max-width: rem(600);
     box-shadow: 0 rem(2) rem(5) 0 rgba(0, 0, 0, 0.05);
 }
