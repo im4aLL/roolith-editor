@@ -2,6 +2,7 @@ import { Event } from "./event";
 import { Helper } from "./helper";
 import { Renderer } from "./renderer";
 import { Modal } from "./modal";
+import { Observer } from "./observer";
 
 export class RoolithEditor {
     constructor(selector, settings = {}) {
@@ -22,13 +23,18 @@ export class RoolithEditor {
 
         this.event = new Event(this.renderer, this.modal, this.settings);
         this.event.register();
+
+        this.observe();
     }
 
     insertContent(content = '') {
         this.closeModal();
 
         this.modal.setFocusToEditor();
-        Helper.insertAtCaret(content);
+        
+        if (content && content.length > 0) {
+            Helper.insertAtCaret(content);
+        }
     }
 
     openModal(title = '', content = '') {
@@ -43,6 +49,15 @@ export class RoolithEditor {
         if (callback) {
             callback.call(this);
         }
+    }
+
+    observe() {
+        Observer.listen('modalInsert', (eventName, value) => {
+            if (value.command === 'image') {
+                const html = `<img src="${value.roolithModalImageUrl}" title="${value.roolithModalImageTitle}">`;
+                this.insertContent(`123456789`);
+            }
+        });
     }
 }
 

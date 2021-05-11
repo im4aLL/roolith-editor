@@ -35,7 +35,23 @@ export const Template = {
                 <div class="roolith__editor__modal__content__body">
                     {content}
                 </div>
+                <div class="roolith__editor__modal__content__footer">
+                    <button class="roolith__editor__modal__cta">Insert</button>
+                </div>
             </div>
         </div>
+    `,
+
+    image: `
+        <form class="roolith__editor__modal__form" data-command="image">
+            <div class="roolith__editor__modal__form__item">
+                <label for="roolithModalImageTitle" class="roolith__editor__modal__form__item__label">Title</label>
+                <input type="text" id="roolithModalImageTitle" name="roolithModalImageTitle" class="roolith__editor__modal__form__item__field">
+            </div>
+            <div class="roolith__editor__modal__form__item">
+                <label for="roolithModalImageUrl" class="roolith__editor__modal__form__item__label">URL</label>
+                <input type="text" id="roolithModalImageUrl" name="roolithModalImageUrl" class="roolith__editor__modal__form__item__field">
+            </div>
+        </form>
     `
 }

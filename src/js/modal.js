@@ -1,4 +1,5 @@
 import { Helper } from "./helper";
+import { Observer } from "./observer";
 import { Template } from "./template";
 
 export class Modal {
@@ -20,6 +21,7 @@ export class Modal {
         document.body.insertAdjacentHTML('afterend', Helper.parseTemplate(Template.modal, { title: settings.title, content: settings.content }));
 
         this.registerCloseEvent();
+        this.registerInsertEvent();
     }
 
     close() {
@@ -27,6 +29,7 @@ export class Modal {
 
         if (modal) {
             this.unregisterCloseEvent();
+            this.unregisterInsertEvent();
             document.querySelector('.roolith__editor__modal').remove();
 
             if (this.range) {
@@ -41,6 +44,30 @@ export class Modal {
 
     unregisterCloseEvent() {
         document.querySelector('.roolith__editor__modal__close').removeEventListener('click', this.close.bind(this));
+    }
+
+    registerInsertEvent() {
+        document.querySelector('.roolith__editor__modal__cta').addEventListener('click', this.insertContent.bind(this));
+    }
+
+    unregisterInsertEvent() {
+        document.querySelector('.roolith__editor__modal__cta').removeEventListener('click', this.insertContent.bind(this));
+    }
+
+    insertContent() {
+        const fields = document.querySelectorAll('.roolith__editor__modal__content .roolith__editor__modal__form__item__field');
+        const commandName = document.querySelector('.roolith__editor__modal__content .roolith__editor__modal__form').getAttribute('data-command');
+        this.close();
+
+        if (fields) {
+            const obj = {};
+            obj['command'] = commandName;
+            fields.forEach(field => {
+                obj[field.getAttribute('name')] = field.value;
+            });
+
+            Observer.dispatch('modalInsert', obj);
+        }
     }
 
     setFocusToEditor(callback) {

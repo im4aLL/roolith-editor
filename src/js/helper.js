@@ -43,7 +43,39 @@ export class Helper {
     }
 
     static insertAtCaret(html) {
-        document.execCommand('insertHTML', false, html);
+        const selection = Helper.getSelection();
+        let range;
+
+        if (!selection) {
+            return false;
+        }
+        
+
+        if (selection.getRangeAt && selection.rangeCount) {
+            range = selection.getRangeAt(0);
+            range.deleteContents();
+
+            const el = document.createElement('div');
+            el.innerHTML = html;
+
+            const frag = document.createDocumentFragment();
+            let node;
+            let lastNode;
+
+            while ((node = el.firstChild)) {
+                lastNode = frag.appendChild(node);
+            }
+
+            range.insertNode(frag);
+
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        }
     }
 
     static putCaretAtEnd(contentEditableElement) {

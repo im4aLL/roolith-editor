@@ -55,3 +55,49 @@ $roolith-editor-modal-content-spacing: rem(10) rem(15) !default;
         opacity: 1;
     }
 }
+
+.roolith__editor__modal__content__footer {
+    padding: $roolith-editor-modal-content-spacing;
+    border-top: rem(1) solid $roolith-editor-border-color;
+    @include clearfix();
+}
+
+.roolith__editor__modal__cta {
+    float: right;
+    background: $roolith-editor-cta-color;
+    padding: rem(5) rem(10);
+    font-family: $roolith-editor-font-family;
+    font-size: rem(14);
+    color: $roolith-editor-cta-font-color;
+    text-transform: uppercase;
+    border-radius: $roolith-editor-border-radius;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        background: darken($roolith-editor-cta-color, 5%);
+    }
+}
+
+.roolith__editor__modal__form {
+
+}
+
+.roolith__editor__modal__form__item {
+    padding-bottom: rem(10);
+}
+
+.roolith__editor__modal__form__item__label {
+    display: block;
+    padding-bottom: rem(5);
+}
+
+.roolith__editor__modal__form__item__field {
+    width: 100%;
+    border: rem(1) solid darken($roolith-editor-primary-color, 5%);
+    font-family: $roolith-editor-font-family;
+    font-size: $roolith-editor-font-size;
+    padding: rem(4) rem(7);
+    outline: none;
+    border-radius: $roolith-editor-border-radius;
+}

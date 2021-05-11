@@ -1,4 +1,5 @@
 import { Helper } from "./helper";
+import { Template } from "./template";
 
 export class Event {
     constructor(renderer, modal, settings) {
@@ -79,7 +80,7 @@ export class Event {
     executeImageCommand(event) {
         this.modal.open({
             title: 'Insert image',
-            content: ''
+            content: Template.image,
         });
         
         // const linkUrl = prompt('Enter image URL:', 'http://');
