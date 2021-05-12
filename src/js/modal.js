@@ -7,6 +7,7 @@ export class Modal {
         this.renderer = renderer;
 
         this.range = null;
+        this.sel = null;
         this.editor = document.getElementById(this.renderer.editorId);
         this.editorBody = this.editor.querySelector('.roolith__editor__content');
         this.watchKeyboard();
@@ -14,9 +15,7 @@ export class Modal {
 
     open(settings = { title: 'Untitled', content: '' }) {
         this.range = Helper.saveSelection();
-        this.setFocusToEditor(() => {
-            this.range = Helper.saveSelection();
-        });
+        this.sel = Helper.getSelection();
 
         document.body.insertAdjacentHTML('afterend', Helper.parseTemplate(Template.modal, { title: settings.title, content: settings.content }));
 
@@ -33,7 +32,7 @@ export class Modal {
             document.querySelector('.roolith__editor__modal').remove();
 
             if (this.range) {
-                Helper.restoreSelection(this.range);
+                Helper.restoreSelection(this.range, this.sel);
             }
         }
     }
@@ -71,8 +70,8 @@ export class Modal {
     }
 
     setFocusToEditor(callback) {
-        if (!this.range || (this.range && this.range.commonAncestorContainer !== this.editorBody)) {
-            this.editorBody.focus();
+        if (document.activeElement !== this.editorBody) {
+            Helper.putCaretAtEnd(this.editorBody);
             
             if (callback) {
                 callback.call(this, this.editorBody);

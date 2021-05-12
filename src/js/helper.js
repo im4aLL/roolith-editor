@@ -21,9 +21,7 @@ export class Helper {
         return false;
     }
 
-    static restoreSelection(range) {
-        let sel = Helper.getSelection();
-
+    static restoreSelection(range, sel) {
         if (range && sel) {
             sel.removeAllRanges();
             sel.addRange(range);

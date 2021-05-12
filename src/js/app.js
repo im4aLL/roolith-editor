@@ -55,7 +55,7 @@ export class RoolithEditor {
         Observer.listen('modalInsert', (eventName, value) => {
             if (value.command === 'image') {
                 const html = `<img src="${value.roolithModalImageUrl}" title="${value.roolithModalImageTitle}">`;
-                this.insertContent(`123456789`);
+                this.insertContent(html);
             }
         });
     }
