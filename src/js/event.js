@@ -20,13 +20,13 @@ export class Event {
     }
 
     registerToolbarEvents() {
-        this.editor.querySelectorAll('.roolith__editor__toolbar__list__item').forEach(button => {
+        this.editor.querySelectorAll('.roolith__editor__toolbar__list__item, .roolith__editor__toolbar__list__item__dropdown__list__item').forEach(button => {
             button.addEventListener('click', this.toolbarButtonClickEvent.bind(this, button));
         });
     }
 
     unregisterToolbarEvents() {
-        this.editor.querySelectorAll('.roolith__editor__toolbar__list__item').forEach(button => {
+        this.editor.querySelectorAll('.roolith__editor__toolbar__list__item, .roolith__editor__toolbar__list__item__dropdown__list__item').forEach(button => {
             button.removeEventListener('click', this.toolbarButtonClickEvent.bind(this, button));
         });
     }
@@ -47,6 +47,15 @@ export class Event {
         let showUi = false;
         let value = null;
 
+        if (!commandName) {
+            const type = button.getAttribute('data-type');
+            if (type === 'dropdown') {
+                button.classList.toggle('is--show');
+            }
+
+            return;
+        }
+
         if (commandName.indexOf(':') > -1) {
             const arr = commandName.split(':');
             commandName = arr[0];
@@ -57,6 +66,10 @@ export class Event {
             this.executeLinkCommand(event);
         } else if (commandName === 'image') {
             this.executeImageCommand(event);
+        } else if (commandName === 'video') {
+            this.executeVideoCommand(event);
+        } else if (commandName === 'videoUrl') {
+            this.executeVideoUrlCommand(event);
         } else {
             this.executeCommand(event, commandName, showUi, value);
         }
@@ -77,19 +90,34 @@ export class Event {
         }
     }
 
+    executeVideoUrlCommand(event) {
+        const url = prompt('Enter video URL:', 'http://');
+        const html = `
+            <video width="320" height="240" controls>
+                <source src="${url}">
+                Your browser does not support the video tag.
+            </video>
+        `;
+
+        this.executeCommand(event, 'insertHTML', false, html);
+    }
+
     executeImageCommand(event) {
+        event.preventDefault();
+
         this.modal.open({
             title: 'Insert image',
             content: Template.image,
         });
-        
-        // const linkUrl = prompt('Enter image URL:', 'http://');
+    }
 
-        // if (selectionText) {
-        //     const value = `<img src="">`;
+    executeVideoCommand(event) {
+        event.preventDefault();
 
-        //     this.executeCommand(event, 'insertHTML', false, value);
-        // }
+        this.modal.open({
+            title: 'Insert embed code',
+            content: Template.video,
+        });
     }
 
     executeCommand(event, commandName, showUi = false, value = null) {

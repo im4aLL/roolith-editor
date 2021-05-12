@@ -13,7 +13,7 @@ export const Template = {
     separator: `<li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--separator">-</li>`,
 
     headings: `
-        <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit">
+        <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit" data-type="dropdown">
             <div class="roolith__editor__toolbar__list__item__dropdown">
                 <div class="roolith__editor__toolbar__list__item__dropdown__header">Heading</div>
                 <ul class="roolith__editor__toolbar__list__item__dropdown__list">
@@ -51,6 +51,14 @@ export const Template = {
             <div class="roolith__editor__modal__form__item">
                 <label for="roolithModalImageUrl" class="roolith__editor__modal__form__item__label">URL</label>
                 <input type="text" id="roolithModalImageUrl" name="roolithModalImageUrl" class="roolith__editor__modal__form__item__field">
+            </div>
+        </form>
+    `,
+
+    video: `
+        <form class="roolith__editor__modal__form" data-command="video">
+            <div class="roolith__editor__modal__form__item">
+                <textarea type="text" rows="5" id="roolithModalEmbededCode" name="roolithModalEmbededCode" class="roolith__editor__modal__form__item__field"></textarea>
             </div>
         </form>
     `

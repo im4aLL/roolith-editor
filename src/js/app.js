@@ -56,6 +56,8 @@ export class RoolithEditor {
             if (value.command === 'image') {
                 const html = `<img src="${value.roolithModalImageUrl}" title="${value.roolithModalImageTitle}">`;
                 this.insertContent(html);
+            } else if (value.command === 'video') {
+                this.insertContent(value.roolithModalEmbededCode);
             }
         });
     }
