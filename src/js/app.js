@@ -1,4 +1,4 @@
-import { Event } from "./event";
+import { EventHandler } from "./eventHandler";
 import { Helper } from "./helper";
 import { Renderer } from "./renderer";
 import { Modal } from "./modal";
@@ -10,8 +10,9 @@ export class RoolithEditor {
         this.instanceId = Helper.generateInstanceId(15);
         this.settings = {...settings};
         this.renderer = null;
-        this.event = null;
+        this.eventHandler = null;
         this.modal = null;
+        this.openModalCallback = null;
         this.observer = Observer;
         this.on = this.observer.listen.bind(this);
 
@@ -23,8 +24,8 @@ export class RoolithEditor {
         this.renderer.generate();
         this.modal = new Modal(this.renderer, this.observer);
 
-        this.event = new Event(this.renderer, this.modal, this.observer, this.settings);
-        this.event.register();
+        this.eventHandler = new EventHandler(this.renderer, this.modal, this.observer, this.settings);
+        this.eventHandler.register();
 
         this.observeModalInsert();
     }
@@ -36,11 +37,19 @@ export class RoolithEditor {
         
         if (content && content.length > 0) {
             Helper.insertAtCaret(content);
+            
+            const editorBody = this.eventHandler.editorBody;
+            const event = new Event('input');
+            editorBody.dispatchEvent(event);
         }
     }
 
-    openModal(title = '', content = '') {
+    openModal(title = '', content = '', callback) {
         this.modal.open({ title, content });
+
+        if (callback) {
+            this.openModalCallback = callback;
+        }
     }
 
     closeModal() {
@@ -60,6 +69,9 @@ export class RoolithEditor {
                 this.insertContent(html);
             } else if (value.command === 'video' && value.roolithModalEmbededCode?.length > 0) {
                 this.insertContent(value.roolithModalEmbededCode);
+            } else if (this.openModalCallback) {
+                this.openModalCallback.call(this, value);
+                this.openModalCallback = null;
             }
         });
     }

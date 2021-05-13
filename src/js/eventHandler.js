@@ -1,7 +1,7 @@
 import { Helper } from "./helper";
 import { Template } from "./template";
 
-export class Event {
+export class EventHandler {
     constructor(renderer, modal, observer, settings) {
         this.renderer = renderer;
         this.modal = modal;
@@ -82,6 +82,11 @@ export class Event {
 
     executeLinkCommand(event) {
         const linkUrl = prompt('Enter a URL:', 'http://');
+
+        if (!linkUrl || linkUrl === 'http://') {
+            return false;
+        }
+
         const selectionText = Helper.getSelection();
 
         if (selectionText) {

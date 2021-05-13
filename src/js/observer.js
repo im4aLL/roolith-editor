@@ -22,7 +22,7 @@ export class Observer {
     static dispatch(name, arg) {
         if (Observer.events[name]) {
             Observer.events[name].forEach(callback => {
-                if (arg) {
+                if (typeof arg !== 'undefined') {
                     callback.call(Observer, arg, name);
                 } else {
                     callback.call(Observer, name);

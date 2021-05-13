@@ -8,7 +8,7 @@ export class Renderer {
         this.instanceId = instanceId;
         this.settings = settings;
 
-        this.buttons = ['bold', 'italic', 'insertUnorderedList', 'insertOrderedList', 'removeFormat'];
+        this.buttons = ['bold', 'italic', 'underline', 'insertUnorderedList', 'insertOrderedList', 'removeFormat'];
         this.editorId = `roolith-editor-${this.instanceId}`;
     }
 
@@ -25,6 +25,8 @@ export class Renderer {
         this.attachInstanceClass();
         this.generateSkeleton();
         this.generateToolbar();
+
+        this.applyStyles();
     }
 
     generateSkeleton() {
@@ -74,5 +76,19 @@ export class Renderer {
         }
 
         return null;
+    }
+
+    applyStyles() {
+        const editorContainer = document.getElementById(this.editorId);
+        const editorBody = editorContainer.querySelector('.roolith__editor__content');
+        const { width, height } = this.settings;
+
+        if (width) {
+            editorContainer.style.width = width;
+        }
+
+        if (height) {
+            editorBody.style.minHeight = height;
+        }
     }
 }
