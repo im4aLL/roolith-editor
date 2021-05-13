@@ -23,7 +23,7 @@ export class Observer {
         if (Observer.events[name]) {
             Observer.events[name].forEach(callback => {
                 if (arg) {
-                    callback.call(Observer, name, arg);
+                    callback.call(Observer, arg, name);
                 } else {
                     callback.call(Observer, name);
                 }

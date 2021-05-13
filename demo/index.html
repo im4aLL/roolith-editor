@@ -27,7 +27,6 @@
                     `,
                     clickHandler: (event, button) => {
                         console.log(event, button);
-                        alert('bapon');
                     }
                 }
             ],
@@ -40,11 +39,9 @@
             linkType: '_blank',
         });
 
-        console.log(editor);
-
-        function insertContent() {
-            editor.insertContent('some content');
-        }
+        editor.on('change', value => {
+            console.log(value);
+        });
     </script>
 </body>
 </html>

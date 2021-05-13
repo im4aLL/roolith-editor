@@ -13,7 +13,7 @@ export const Template = {
     separator: `<li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--separator">-</li>`,
 
     headings: `
-        <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--fit" data-type="dropdown">
+        <li class="roolith__editor__toolbar__list__item roolith__editor__toolbar__list__item--dropdown">
             <div class="roolith__editor__toolbar__list__item__dropdown">
                 <div class="roolith__editor__toolbar__list__item__dropdown__header">Heading</div>
                 <ul class="roolith__editor__toolbar__list__item__dropdown__list">

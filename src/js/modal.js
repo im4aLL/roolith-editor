@@ -1,10 +1,10 @@
 import { Helper } from "./helper";
-import { Observer } from "./observer";
 import { Template } from "./template";
 
 export class Modal {
-    constructor(renderer) {
+    constructor(renderer, observer) {
         this.renderer = renderer;
+        this.observer = observer;
 
         this.range = null;
         this.sel = null;
@@ -65,7 +65,7 @@ export class Modal {
                 obj[field.getAttribute('name')] = field.value;
             });
 
-            Observer.dispatch('modalInsert', obj);
+            this.observer.dispatch('modalInsert', obj);
         }
     }
 
