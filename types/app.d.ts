@@ -4,13 +4,14 @@ export class RoolithEditor {
     instanceId: string;
     settings: {};
     renderer: Renderer;
-    event: Event;
+    eventHandler: EventHandler;
     modal: Modal;
+    openModalCallback: any;
     observer: typeof Observer;
     on: any;
     init(): void;
     insertContent(content?: string): void;
-    openModal(title?: string, content?: string): void;
+    openModal(title: string, content: string, callback: any): void;
     closeModal(): void;
     change(callback?: any): void;
     observeModalInsert(): void;
@@ -30,8 +31,9 @@ declare class Renderer {
     hideSelector(): void;
     attachInstanceClass(): void;
     getToolbarIcon(button: any): any;
+    applyStyles(): void;
 }
-declare class Event {
+declare class EventHandler {
     constructor(renderer: any, modal: any, observer: any, settings: any);
     renderer: any;
     modal: any;
@@ -44,7 +46,7 @@ declare class Event {
     registerToolbarEvents(): void;
     unregisterToolbarEvents(): void;
     toolbarButtonClickEvent(button: any, event: any): void;
-    executeLinkCommand(event: any): void;
+    executeLinkCommand(event: any): boolean;
     executeVideoUrlCommand(event: any): void;
     executeImageCommand(event: any): void;
     executeVideoCommand(event: any): void;

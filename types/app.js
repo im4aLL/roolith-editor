@@ -170,7 +170,7 @@ const Template = {
     `
 };
 
-class Event {
+class EventHandler {
     constructor(renderer, modal, observer, settings) {
         this.renderer = renderer;
         this.modal = modal;
@@ -251,6 +251,11 @@ class Event {
 
     executeLinkCommand(event) {
         const linkUrl = prompt('Enter a URL:', 'http://');
+
+        if (!linkUrl || linkUrl === 'http://') {
+            return false;
+        }
+
         const selectionText = Helper.getSelection();
 
         if (selectionText) {
@@ -387,7 +392,7 @@ class Renderer {
         this.instanceId = instanceId;
         this.settings = settings;
 
-        this.buttons = ['bold', 'italic', 'insertUnorderedList', 'insertOrderedList', 'removeFormat'];
+        this.buttons = ['bold', 'italic', 'underline', 'insertUnorderedList', 'insertOrderedList', 'removeFormat'];
         this.editorId = `roolith-editor-${this.instanceId}`;
     }
 
@@ -404,6 +409,8 @@ class Renderer {
         this.attachInstanceClass();
         this.generateSkeleton();
         this.generateToolbar();
+
+        this.applyStyles();
     }
 
     generateSkeleton() {
@@ -453,6 +460,20 @@ class Renderer {
         }
 
         return null;
+    }
+
+    applyStyles() {
+        const editorContainer = document.getElementById(this.editorId);
+        const editorBody = editorContainer.querySelector('.roolith__editor__content');
+        const { width, height } = this.settings;
+
+        if (width) {
+            editorContainer.style.width = width;
+        }
+
+        if (height) {
+            editorBody.style.minHeight = height;
+        }
     }
 }
 
@@ -567,7 +588,7 @@ class Observer {
     static dispatch(name, arg) {
         if (Observer.events[name]) {
             Observer.events[name].forEach(callback => {
-                if (arg) {
+                if (typeof arg !== 'undefined') {
                     callback.call(Observer, arg, name);
                 } else {
                     callback.call(Observer, name);
@@ -583,8 +604,9 @@ class RoolithEditor {
         this.instanceId = Helper.generateInstanceId(15);
         this.settings = {...settings};
         this.renderer = null;
-        this.event = null;
+        this.eventHandler = null;
         this.modal = null;
+        this.openModalCallback = null;
         this.observer = Observer;
         this.on = this.observer.listen.bind(this);
 
@@ -596,8 +618,8 @@ class RoolithEditor {
         this.renderer.generate();
         this.modal = new Modal(this.renderer, this.observer);
 
-        this.event = new Event(this.renderer, this.modal, this.observer, this.settings);
-        this.event.register();
+        this.eventHandler = new EventHandler(this.renderer, this.modal, this.observer, this.settings);
+        this.eventHandler.register();
 
         this.observeModalInsert();
     }
@@ -609,11 +631,19 @@ class RoolithEditor {
         
         if (content && content.length > 0) {
             Helper.insertAtCaret(content);
+            
+            const editorBody = this.eventHandler.editorBody;
+            const event = new Event('input');
+            editorBody.dispatchEvent(event);
         }
     }
 
-    openModal(title = '', content = '') {
+    openModal(title = '', content = '', callback) {
         this.modal.open({ title, content });
+
+        if (callback) {
+            this.openModalCallback = callback;
+        }
     }
 
     closeModal() {
@@ -633,6 +663,9 @@ class RoolithEditor {
                 this.insertContent(html);
             } else if (value.command === 'video' && value.roolithModalEmbededCode?.length > 0) {
                 this.insertContent(value.roolithModalEmbededCode);
+            } else if (this.openModalCallback) {
+                this.openModalCallback.call(this, value);
+                this.openModalCallback = null;
             }
         });
     }
