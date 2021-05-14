@@ -96,3 +96,52 @@ editor.on('change', value => {
     console.log(value);
 });
 ```
+
+### Example usage in Angular
+
+1. Install package
+
+```
+npm install @im4all/editor --save
+```
+
+2. Inject SASS file 
+
+```sass
+@import "../node_modules/@im4all/editor/src/sass/style.scss";
+```
+
+3. Import in component 
+
+template file
+```html
+<textarea id="editor" #editor></textarea>
+```
+
+component file
+```js
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RoolithEditor } from '@im4all/editor';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('editor') editorElement: ElementRef;
+
+  constructor() {}
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    const editor = new RoolithEditor(this.editorElement.nativeElement);
+
+    editor.on('change', value => {
+      console.log(value);
+    });
+  }
+}
+
+```
