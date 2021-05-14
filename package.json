@@ -1,11 +1,12 @@
 {
   "name": "@im4all/editor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A basic rich text editor",
   "main": "./lib/cjs/app.js",
   "module": "./lib/esm/app.js",
   "files": [
-    "lib/"
+    "lib/",
+    "src/sass/"
   ],
   "scripts": {
     "start": "gulp watch",
