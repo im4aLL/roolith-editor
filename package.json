@@ -1,6 +1,6 @@
 {
   "name": "@im4all/editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A basic rich text editor",
   "main": "./lib/cjs/app.js",
   "module": "./lib/esm/app.js",
