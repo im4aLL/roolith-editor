@@ -3,6 +3,9 @@ A basic es6 rich text editor (typescript supported)
 
 ![roolith editor demo](https://raw.githubusercontent.com/im4aLL/roolith-editor/master/roolith-editor.png)
 
+### Live demo
+[http://habibhadi.com/lab/roolith-editor/](http://habibhadi.com/lab/roolith-editor/)
+
 ## Usage
 
 ```html
