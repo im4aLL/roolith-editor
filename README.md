@@ -13,6 +13,14 @@ A basic es6 rich text editor
 new RoolithEditor(document.getElementById('editor'));
 ```
 
+## Installation
+
+```
+npm install @roolith/editor --save
+```
+
+Add `style.scss` to project and import RoolithEditor from package. Check out demo folder for more details or you can use compiled version for non es6 project. To do that clone the repo and run `npm run build` and it will generate dist folder with minified css and js file.
+
 ### watch for changes
 
 ```js
