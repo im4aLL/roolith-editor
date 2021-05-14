@@ -1,0 +1,21 @@
+export const ToolbarIcons: {
+    bold: string;
+    italic: string;
+    insertUnorderedList: string;
+    insertOrderedList: string;
+    removeFormat: string;
+    justifyLeft: string;
+    justifyCenter: string;
+    justifyRight: string;
+    justifyFull: string;
+    createLink: string;
+    underline: string;
+    subscript: string;
+    superscript: string;
+    'formatBlock:blockquote': string;
+    'formatBlock:pre': string;
+    image: string;
+    video: string;
+    indent: string;
+    videoUrl: string;
+};

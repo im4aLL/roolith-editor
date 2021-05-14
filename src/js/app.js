@@ -77,4 +77,5 @@ export class RoolithEditor {
     }
 }
 
-window.RoolithEditor = RoolithEditor;
+var global = window || global;
+global.RoolithEditor = RoolithEditor;

@@ -2,12 +2,16 @@
   "name": "@im4all/editor",
   "version": "1.0.0",
   "description": "A basic rich text editor",
-  "main": "types/app.js",
-  "types": "types",
+  "main": "./lib/cjs/app.js",
+  "module": "./lib/esm/app.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "start": "gulp watch",
     "build": "gulp production",
-    "package": "rollup src/js/app.js --file types/app.js && tsc types/app.js --allowJs --declaration --emitDeclarationOnly"
+    "package": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublish": "npm run package"
   },
   "repository": {
     "type": "git",
