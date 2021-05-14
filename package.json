@@ -1,5 +1,5 @@
 {
-  "name": "@roolith/editor",
+  "name": "@im4all/editor",
   "version": "1.0.0",
   "description": "A basic rich text editor",
   "main": "types/app.js",
